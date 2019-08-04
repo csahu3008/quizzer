@@ -70,14 +70,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'quizzer.wsgi.application'
 
-
+LOGIN_URL='login'
+LOGOUT_URL='logout'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db2.sqlite3'),
     }
 }
 
@@ -114,9 +115,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+AUTH_USER_MODEL='users.Quizzers'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+STATICFILES_DIRS=[os.path.join(BASE_DIR,'static'),]

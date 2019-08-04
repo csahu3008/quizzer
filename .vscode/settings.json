@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "C:\\Users\\chandrashekhar\\.virtualenvs\\quizzer-oA-9kRhV\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\chandrashekhar\\.virtualenvs\\quizzer-oA-9kRhV\\Scripts\\python.exe",
+    "git.ignoreLimitWarning": true,
+    "editor.colorDecorators": true,
+    "css.lint.hexColorLength": "warning",
+   
 }

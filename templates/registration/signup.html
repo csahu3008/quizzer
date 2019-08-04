@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- <p class='msg'>
+        {% if messages %}{% for m in messages %}<h1>{{m}}</h1>{% endfor %}{% else %}{% endif %}
+    </p> -->
+    <input type='button' style='border:2px solid red;color:white;font-size:16px;background:blue;' id='stud' value='Signup as Stud'>
+    <input type='button' style='border:2px solid red;color:white;font-size:16px;background:blue;' id='contributer'  value='Signup as Contributer'>
+   <form method='POST' link="{% url 'signup' %}" id='forms-section'>  
+   </form>
+    <script>
+
+    $(document).ready(function(){
+       $('#stud').on('click',function(){
+            var $inp6=$("<input>",{type:'button',id:'studbtn',class:'btn',value:'Register as Stud'})
+             $('#forms-section').html('{{form.as_p|linebreaks}}').append($inp6);
+       });
+
+ 
+       $('#contributer').on('click',function(){
+        var $inp6=$("<input>",{type:'button',id:'contributerbtn',class:'btn',value:'Contributer'})
+          $('#forms-section').html('{{form.as_p|linebreaks}}').append($inp6)
+          
+       });
+   
+    $('body').on('click','#contributerbtn',function(){
+           $('body').css({'background':'black','color':'white'});
+           var form=$('form');
+           console.log(form);
+           var l=form.serializeArray();
+           l.push({name:'csrfmiddlewaretoken',value:'{{csrf_token}}'});
+           l.push({name:'is_contributer',value:'True'});
+           console.log(l);
+           $.ajax({
+               data:l,
+               url:form.attr('link'),
+               type:'POST',
+               dataType:'json',
+               success:function(data){
+                if(data.status==404){
+                       var e=data.errors                       
+                       for( const key in e){
+                           $('#'+key).parents('p').append(`<p>${e[key]}</p>`)                           
+                       }
+                       
+                   }
+                },
+               failure:function(xhr){
+                   console.log(xhr.status)
+               },
+               });
+
+           
+    });
+    $('body').on('click','#studbtn',function(){
+           $('body').css({'background':'red','color':'yellow'});
+           var form=$('form');
+           console.log(form);
+           var l=form.serializeArray();
+           l.push({name:'csrfmiddlewaretoken',value:'{{csrf_token}}'});
+           l.push({name:'is_stud',value:'True'});
+           console.log(l);
+           $.ajax({
+               data:l,
+               url:form.attr('link'),
+               type:'POST',
+               dataType:'json',
+               success:function(data){
+                   if(data.status==404){
+                       var e=data.errors                       
+                       for( const key in e){
+                           $('#'+key).parents('p').append(`<p>${e[key]}</p>`)                           
+                       }
+                       
+                   }
+               },
+               failure:function(xhr){
+                   console.log(xhr.status)
+               },
+              
+           });
+
+    });
+
+    });
+    </script>
+{% endblock content %}
