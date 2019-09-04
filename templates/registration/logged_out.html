@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block list %}
+<script>
+     var msg="you are Logged out successfully "
+alertify.alert(msg,function(){
+    window.location.href="{% url 'login' %}";
+})
+
+</script>
+{% endblock list %}

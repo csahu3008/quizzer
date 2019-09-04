@@ -4,10 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pylint = "*"
 
 [packages]
 django = "*"
-djangorestframework = "*"
+django-crispy-forms = "*"
+gunicorn = "*"
+dj-database-url = "*"
+whitenoise = "*"
+psycopg2 = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.6"

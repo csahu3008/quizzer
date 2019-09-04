@@ -1,80 +1,73 @@
-{% load static %}
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>      
     <meta charset="UTF-8">
-    <script src='{% static "js/jquery-3.4.1.min.js" %}'></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>onlyMobileVies</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href='{% static "css/alert.css" %}' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='{% static "js/alertify.min.js" %}'></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src='{% static "js/jquery-3.4.1.min.js" %}'></script>
+
     <style>
-     @media screen and (max-width:768px) {
-        body{
-            color:white;
-            background: linear-gradient(to right,yellow,red);
-        }
-        .main{
-          width:100%;
-        }
-        .form{
-          margin-left:10%;
-          border:2px solid white;
-          animation:just;
-          padding:10%;
-          animation-duration: 2s;
-          animation-direction: alternate-reverse;
-          animation-iteration-count: infinite;
-          width:60%;
-        }
-        @keyframes just{
-            0%{
-               background:green;
-            }
-            50%{
-                background:grey;
-            }
-            100%{
-                background:black;
-            }
-        }
-
-        #email,#name ,#mobile,#password,#password2{
-            font-size: 17px;
-           width:90%;
-           padding-left:5%;
-           padding-right: 5%;
-           padding-top:5px;
-           padding-bottom:5px;
-        }
-        #contributer,#stud{
-            width:50%;
-            display:block;
-            padding-top:25px;
-            margin-top:10px;
-            padding-bottom:25px;
-            margin-left:25%;
-        }
-        .btn{
-            margin-left:25%;
-            height:40px;
-            cursor: alias;
-            background:chartreuse;
-            border:0px;
-            outline:0px;
-            box-shadow:3px 5px 3px black;
-            width:50%;
-
-        }
-
-    }
-</style>
+  body{
+      background:linear-gradient(to right,#6EEADB,#009EFA);
+  }
+    </style>
 </head>
 <body>
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <a class="navbar-brand" href="{% url 'main' %}" style='font-size:30px;'>Quizzers</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                  <ul class="navbar-nav">
+                      {% if user.is_authenticated %}
+                      {% if user.is_contributer %}
+                      <li class="nav-item">
+                      <a class="nav-link" href="{% url 'create' %}">Add Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="{% url 'main' %}">Start Quiz</a>
+                          </li>
+                    {% else %}
+                    <li class="nav-item">
+                            <a class="nav-link" href="{% url 'main' %}">StartQuiz</a>
+                          </li>
+                    {% endif %}
+                    <li class="nav-item">
+                            <a class="nav-link" href="">{{user.email}}</a>
+                          </li>
+                      <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">logout</a>
+                      </li>
+                     {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </div>  
+              </nav>
+
     <div class='main'>
-        <div class='form'>
         {% block content %}
         {% endblock content %}
         </div>
+    </div>
+    <div class='container quiz_list mt-5'>
+        {% block list %}
+        {% endblock list %}
     </div>
 </body>
 </html>

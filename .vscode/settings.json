@@ -1,7 +1,9 @@
 {
-    "python.pythonPath": "C:\\Users\\chandrashekhar\\.virtualenvs\\quizzer-oA-9kRhV\\Scripts\\python.exe",
+    "python.pythonPath": "/home/shekhar/.local/share/virtualenvs/quizzer-mayCqbkb/bin/python",
     "git.ignoreLimitWarning": true,
     "editor.colorDecorators": true,
     "css.lint.hexColorLength": "warning",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
    
 }

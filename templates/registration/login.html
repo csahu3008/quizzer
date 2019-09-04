@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
+<div class='form jumbotron container mt-4 border border-success'>
+{% load crispy_forms_tags %}
     {% if form.errors %}
        <p>{{errors}}</p>
     {% else %}
     {% endif %}
     <form method='POST'>
     {% csrf_token %}
-    <p><label>{{form.email.label}}</label><span>{{form.email}}</span></p>
-    <p><label>{{form.password.label}}</label><span>{{form.password}}</span></p>
-    <input type='submit' value='sign in' class='btn'>
+    {{form|crispy}}
+    <input type='submit' value='sign in' class='btn btn-success'>
     </form>
-
+</div>
 {% endblock content %}

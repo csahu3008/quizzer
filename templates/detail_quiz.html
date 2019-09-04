@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% block list %}
+<style>
+#options{
+  padding:10px;
+  text-align: center;
+}
+#options p{
+  padding:10px;
+  background: white;
+  text-align: center;
+  border:2px solid greenyellow;
+}
+#link{
+  padding:10px;
+  text-decoration: none;
+  color:white;
+  font-size:20px;
+  background:blue;
+}
+</style>
+<body>
+  {% if messages %}
+  {% for m in messages %}
+  {{m}}
+  {% endfor %}
+  {% endif %}
+    <p style='font-size:30px;font-weight: 400;text-align:center;' class='title'>{{first.questiontitle}}</p>
+    <div id='options'>
+    <p><input type='radio' name='ch'  value='{{first.op1}}'>{{first.op1}}</p>
+    <p><input type='radio' name='ch' value='{{first.op2}}'>{{first.op2}}</p>
+    <p><input type='radio' name='ch' value='{{first.op3}}'>{{first.op3}}</p>
+    <p><input type='radio' name='ch' value='{{first.op4}}'>{{first.op4}}</p>
+    </div>
+<a id='link' href="{% url 'next'  first.id %}">Next Question</a>
+
+<script>;
+       var start='{{first.id}}';
+      var last=parseInt('{{last}}');
+      var k=parseInt(start)+1;
+      if(start==last){
+        document.getElementById('link').href='{% url "take" first.quiz.category %}';
+        document.getElementById('link').innerText='Submit';
+      }
+      else{  var p=document.getElementById('link').href;
+        document.getElementById('link').href=p.replace('/{{first.id}}/','/'+parseInt(k)+'/')
+           }
+
+      $(document).ready(function(){
+        $('input:radio').hide();
+       $('#options p').on('click',function(){
+         var bo=$(this);
+         $(bo).siblings().css('background','white');
+         if($(this).children('input:radio').prop("checked")){
+          $(bo).css('background','white');
+          $(this).children('input:radio').prop("checked",false);
+         }
+         else{
+          $(bo).css('background','green');
+          $(this).children('input:radio').prop("checked",true);
+         }
+       });
+       $('a').on('click',function(e){
+             e.preventDefault();
+            if($('#options p').children('input:radio:checked').prop('checked'))
+            {
+               $.ajax({
+               url:"{% url 'submit' %}",
+               method:'post',
+               data:{'option-selected':$('#options p').children('input:radio:checked').val(),'csrfmiddlewaretoken':'{{csrf_token}}','qno':'{{first.id}}'},
+               success:function(data){
+                window.location.href=$('#link').attr('href');
+               },
+               failure:function(xhr)
+               {
+                 console.log(xhr);
+               }
+             }) 
+             }
+             else{
+              e.preventDefault();
+              alertify.alert("You must select at least one to proceed next");
+            }
+                  });
+      });
+</script>
+{% endblock list %}

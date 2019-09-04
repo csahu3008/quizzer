@@ -1,7 +1,11 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect,reverse,resolve_url
 from django.http import JsonResponse
 from .models import Quizzers
+from django.db.models import Q
+from django.contrib.contenttypes.models import  ContentType
+from django.contrib.auth.models import Permission
 from django.contrib import messages
+from quiz.models import Category,Question,Quiz
 from .forms import CreateForm,ChangeForm,LoginForm
 from django.contrib.auth import login,authenticate
 def Signup(request):
@@ -17,10 +21,18 @@ def Signup(request):
         form=CreateForm(request.POST)
         if form.is_valid():
             contributer=form.save()
+            print(contributer)
             if status:
                 contributer.is_contributer=p
+                contributer.is_stud=True
+                contributer.is_staff=True 
+                c1=ContentType.objects.get_for_model(Quiz)
+                c2=ContentType.objects.get_for_model(Question)
+                permissions=Permission.objects.filter(Q(content_type=c1)|Q(content_type=c2))
+                contributer.user_permissions.set(permissions)
             else:
                 contributer.is_stud=p
+                contributer.is_staff=True
             contributer.save()
             messages.success(request,msg)
             data={'status':status}
@@ -36,8 +48,8 @@ def Signup(request):
 
 
 def Login(request):
-    # if request.session.get('email'):
-    #     return HttpResponse("U Are already Logged in")
+    if request.session.get('email'):
+        return redirect('/') 
     if request.method=='POST':
         form=LoginForm(request.POST)
         if form.is_valid():
@@ -48,9 +60,12 @@ def Login(request):
                 if user.is_contributer:
                     request.session['email']=email
                     login(request,user)
-                    return HttpResponse('You are logged in successfully')
+                    return redirect('/')
                 else:
-                    return HttpResponse('You are not recognize as Contributer')
+                    if user.is_stud:
+                        request.session['email']=email
+                        login(request,user)
+                        return redirect('/')
             else:
                 return HttpResponse('Invalid credential details were entered ,Try again')
         else:

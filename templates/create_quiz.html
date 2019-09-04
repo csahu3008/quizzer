@@ -1,0 +1,51 @@
+{%  extends "base.html" %}
+{% block list%}
+{% load crispy_forms_tags %}
+    {% if form.errors %}
+       <p>{{errors}}</p>
+    {% else %}
+    {% endif %}
+    <form id='forms' method='POST'>
+      {{form1|crispy}}
+      {% csrf_token %}
+     <div class='forms'>  
+     {{formset.management_form}}
+     {% if formset.errors %}
+       {{errors}}
+     {% endif %}
+      {% for form in formset %}
+      <div style='border-top:10px solid green;'>
+      <p class='c'>{{forloop.counter}}</p>
+      {{form.non_field_error}}
+      {{form|crispy}} 
+      </div>
+      {% endfor %}
+     
+      </div>
+      <input type='submit' class='btn btn-success' value='Add Questions'>   
+      </form>
+  
+      <div class='empty-form' style='display:none;'>
+      {{formset.empty_form|crispy}}
+      </div>
+      <button id='addForm' class='btn btn-danger mt-2 mb-3'>Add More Questions</a> 
+    </div>
+
+
+    <script>
+           $(document).ready(function(){
+           
+          $('#addForm').on('click',function(){
+                $ind=$('#id_form-TOTAL_FORMS').val();
+                $('.forms').append("<p class='' style='border-top:10px solid green;'></p>");
+                $('.forms').append(`<p class=''>${parseInt($ind)+1}</p>`);
+                $('.forms').append($('.empty-form').html().replace(/__prefix__/g,$ind));
+                $('.DeleteForm').attr('id',$ind);
+                $('#id_form-TOTAL_FORMS').val(parseInt($ind)+1);
+          });
+
+     });
+    
+       
+    </script>
+{% endblock list %}

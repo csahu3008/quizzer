@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block list %}
+{% load loads %}  
+    {% if messages %}
+    {% for m in messages  %}
+    {{m}}
+    {% endfor %}
+    {% endif %}
+    <h2 style='color:white;' class='container'>The App Which Can Satisfy your knowledge</h2>
+    <h3>Search For Quiz Based on Category </h3>
+    {% for f in object_list %}
+    <p class='p-3 ml-2 badge badge-danger'> <a style='font-size: 20px;color:white; ' href='{% url "take" f.title|slugify %}'>{{f.title}}</a></p>
+    {% endfor %}
+{% endblock list %}
