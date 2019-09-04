@@ -25,7 +25,7 @@ SECRET_KEY = 't7ili*ou8y0c@44fr4n70woe30x1xff1u&#2^d^2yevv0qekhz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1','quizzersapp.herokuapp.com']
 
 
 # Application definition
