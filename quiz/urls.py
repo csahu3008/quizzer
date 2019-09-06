@@ -7,6 +7,6 @@ urlpatterns = [
      path('takequiz/main/<int:pk>/',NextPages.as_view(),name='next'),
      path('submit/',Submit,name='submit'),
      path('',MainPage.as_view(),name='main'),
-     re_path(r'^(?P<id>[a-z-]*)/$',TakeQuiz.as_view(),name='take')
+     re_path(r'^(?P<id>[A-Z a-z -]*)/$',TakeQuiz.as_view(),name='take')
  
  ]

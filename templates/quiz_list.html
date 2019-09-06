@@ -3,7 +3,7 @@
 {% load loads %}  
     {% if messages %}
     {% for m in messages  %}
-    {{m}}
+    <script>alertify.alert('{{m}}');</script>
     {% endfor %}
     {% endif %}
     {% for q in object_list %}
