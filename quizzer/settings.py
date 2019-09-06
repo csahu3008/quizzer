@@ -24,8 +24,8 @@ SECRET_KEY = 't7ili*ou8y0c@44fr4n70woe30x1xff1u&#2^d^2yevv0qekhz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =False
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1','quizzersapp.herokuapp.com']
-# ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -36,23 +36,23 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'users','quiz'
+    , 'whitenoise.runserver_nostatic'
     ,'crispy_forms'
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 ROOT_URLCONF = 'quizzer.urls'
 
 TEMPLATES = [
@@ -86,7 +86,6 @@ DATABASES = {
 }
 db_from_env=dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
-
 
 
 # Password validation
@@ -126,6 +125,6 @@ AUTH_USER_MODEL='users.Quizzers'
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS=[os.path.join(BASE_DIR,'static'),]
+STATIC_ROOT=os.path.join(BASE_DIR,"staticfiles")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
