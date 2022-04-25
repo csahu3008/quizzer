@@ -16,4 +16,4 @@ psycopg2 = "*"
 django-heroku = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"

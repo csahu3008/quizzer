@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 't7ili*ou8y0c@44fr4n70woe30x1xff1u&#2^d^2yevv0qekhz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =False
+DEBUG =True
 
 ALLOWED_HOSTS = ['*','quizzersapp.herokuapp.com']
 
@@ -87,7 +87,12 @@ DATABASES = {
 db_from_env=dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+}
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 

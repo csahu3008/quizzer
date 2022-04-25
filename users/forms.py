@@ -1,5 +1,7 @@
 from django import forms
-from django.utils.translation import ugettext as _
+# from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
+
 from users.models import Quizzers
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
